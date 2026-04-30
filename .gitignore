@@ -1,15 +1,48 @@
+# Build artifacts
+build/
+.gradle/
+bin/
+gen/
+out/
+
+# Android Studio / IntelliJ IDEA
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+*.iws
+*.ipr
+/captures/
+/memory_settings.xml
+
+# Keystore files (Keep your keys private!)
+*.jks
+*.keystore
+*.p12
+
+# Local configuration
 local.properties
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Log files
+*.log
+
+# C++ / NDK
+.externalNativeBuild/
+.cxx/
+*.o
+*.so
+
+# Kotlin
+.kotlin/
+
+# Secrets / API Keys (Recommended to keep out of VCS)
+# secrets.properties
+# apikey.properties
+# google-services.json
