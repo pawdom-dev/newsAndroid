@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.my.newsandroid.ui.news.NewsScreen
+import com.my.newsandroid.ui.NavGraph
 import com.my.newsandroid.ui.theme.NewsAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
             NewsAndroidTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        NewsScreen()
+                        NavGraph()
                     }
                 }
             }

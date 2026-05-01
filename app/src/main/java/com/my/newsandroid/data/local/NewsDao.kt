@@ -13,6 +13,9 @@ interface NewsDao {
     @Query("SELECT * FROM articles WHERE page = :page ORDER BY pubDate DESC")
     suspend fun getArticlesByPage(page: Int): List<ArticleEntity>
 
+    @Query("SELECT * FROM articles WHERE id = :id")
+    suspend fun getArticleById(id: String): ArticleEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArticles(articles: List<ArticleEntity>)
 

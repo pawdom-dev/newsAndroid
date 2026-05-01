@@ -36,4 +36,8 @@ class NewsRepositoryImpl @Inject constructor(
             }
         }
     }
+
+    override suspend fun getArticleById(id: String): Article? {
+        return newsDao.getArticleById(id)?.localToDomain()
+    }
 }

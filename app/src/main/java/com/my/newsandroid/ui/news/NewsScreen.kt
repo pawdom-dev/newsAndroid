@@ -1,5 +1,6 @@
 package com.my.newsandroid.ui.news
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,6 +32,7 @@ import com.my.newsandroid.domain.model.Article
 
 @Composable
 fun NewsScreen(
+    onArticleClick: (String) -> Unit,
     viewModel: NewsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -53,7 +55,10 @@ fun NewsScreen(
                 if (index >= uiState.articles.size - 1 && !uiState.isLoading && !uiState.isPaginationLoading && !uiState.endReached) {
                     viewModel.fetchNextPage()
                 }
-                ArticleItem(article)
+                ArticleItem(
+                    article = article,
+                    onClick = { onArticleClick(article.id) }
+                )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
             }
 
@@ -74,10 +79,14 @@ fun NewsScreen(
 }
 
 @Composable
-fun ArticleItem(article: Article) {
+fun ArticleItem(
+    article: Article,
+    onClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
