@@ -15,7 +15,9 @@ import javax.inject.Inject
 data class NewsUiState(
     val articles: List<Article> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null
+    val isPaginationLoading: Boolean = false,
+    val error: String? = null,
+    val endReached: Boolean = false
 )
 
 @HiltViewModel
@@ -26,16 +28,48 @@ class NewsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(NewsUiState())
     val uiState: StateFlow<NewsUiState> = _uiState.asStateFlow()
 
+    private var currentPage = 1
+
     init {
         fetchNews()
+    }
+
+    fun fetchNextPage() {
+        if (_uiState.value.isPaginationLoading || _uiState.value.endReached) return
+
+        viewModelScope.launch {
+            _uiState.update { it.copy(isPaginationLoading = true) }
+            try {
+                val nextArticles = repository.getNews(currentPage + 1)
+                if (nextArticles.isEmpty()) {
+                    _uiState.update { it.copy(endReached = true, isPaginationLoading = false) }
+                } else {
+                    currentPage++
+                    _uiState.update {
+                        it.copy(
+                            articles = it.articles + nextArticles,
+                            isPaginationLoading = false
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                _uiState.update { it.copy(error = e.localizedMessage, isPaginationLoading = false) }
+            }
+        }
     }
 
     private fun fetchNews() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             try {
-                val articles = repository.getNews()
-                _uiState.update { it.copy(articles = articles, isLoading = false) }
+                val articles = repository.getNews(currentPage)
+                _uiState.update { 
+                    it.copy(
+                        articles = articles, 
+                        isLoading = false,
+                        endReached = articles.isEmpty()
+                    ) 
+                }
             } catch (e: Exception) {
                 _uiState.update { it.copy(error = e.localizedMessage, isLoading = false) }
             }

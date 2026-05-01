@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +36,7 @@ fun NewsScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
-        if (uiState.isLoading) {
+        if (uiState.isLoading && uiState.articles.isEmpty()) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
 
@@ -49,9 +49,25 @@ fun NewsScreen(
         }
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(uiState.articles) { article ->
+            itemsIndexed(uiState.articles) { index, article ->
+                if (index >= uiState.articles.size - 1 && !uiState.isLoading && !uiState.isPaginationLoading && !uiState.endReached) {
+                    viewModel.fetchNextPage()
+                }
                 ArticleItem(article)
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+            }
+
+            if (uiState.isPaginationLoading) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(modifier = Modifier.size(24.dp))
+                    }
+                }
             }
         }
     }
