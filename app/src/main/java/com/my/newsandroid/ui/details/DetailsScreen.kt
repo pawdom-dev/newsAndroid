@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.my.newsandroid.util.DateFormatter
 
 @Composable
 fun DetailsScreen(
@@ -141,7 +142,7 @@ fun DetailsScreen(
                             )
                             Box(modifier = Modifier.size(4.dp).background(MaterialTheme.colorScheme.primary, CircleShape))
                             Text(
-                                text = article.pubDate,
+                                text = DateFormatter.formatIsoDate(article.pubDate),
                                 style = MaterialTheme.typography.bodySmall,
                                 fontWeight = FontWeight.Bold
                             )
