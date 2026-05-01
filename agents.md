@@ -21,7 +21,7 @@ A modern Android application for news, built with Jetpack Compose and following 
 - **Lint:** `./gradlew lint`
 
 ## Architecture & Design Patterns
-- **UI Layer:** Use Composable functions. Prefer stateless composables by hoisting state.
+- **UI Layer:** Use Composable functions. Prefer stateless composables by hoisting state. Views (Composables) should only use **Domain Models** for displaying data. Avoid passing DTOs or Entities to the UI layer.
 - **ViewModel:** Use `androidx.lifecycle.ViewModel` for managing UI state and business logic.
 - **Data Layer:** Use Repositories to abstract data sources (Network, Database).
 - **Navigation:** Use Compose Navigation.

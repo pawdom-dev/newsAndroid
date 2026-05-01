@@ -3,22 +3,22 @@ package com.my.newsandroid.data.remote
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class NewsResponse(
-    val data: NewsData
+data class NewsResponseDto(
+    val data: NewsDataDto
 )
 
 @Serializable
-data class NewsData(
-    val articles: ArticlesWrapper
+data class NewsDataDto(
+    val articles: ArticlesWrapperDto
 )
 
 @Serializable
-data class ArticlesWrapper(
-    val content: ArticlesContent
+data class ArticlesWrapperDto(
+    val content: ArticlesContentDto
 )
 
 @Serializable
-data class ArticlesContent(
+data class ArticlesContentDto(
     val page: List<ArticleDto>
 )
 
