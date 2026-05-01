@@ -30,6 +30,11 @@ A modern Android application for news, built with Jetpack Compose and following 
     - Hoist navigation logic by passing lambdas (e.g., `onItemClick: (String) -> Unit`) to Composables rather than passing `NavController`.
     - Avoid passing large data objects through navigation routes; pass unique IDs and fetch data in the destination ViewModel.
 - **Dependency Injection:** Use Hilt for DI. Annotate ViewModels with `@HiltViewModel`.
+- **Data Modeling:** Separate models for each layer:
+    - **Network Models (DTOs):** In `data/remote`, suffixed with `Dto`. Use for API responses.
+    - **Database Models (Entities):** In `data/local`, suffixed with `Entity`. Use for Room/DB.
+    - **Domain Models:** In `domain/model`. Pure Kotlin classes, no platform-specific or serialization annotations.
+    - **Mappers:** Use extension functions (e.g., `toDomain()`, `toEntity()`) to convert between models across layers.
 
 ## Coding Guidelines
 - **Kotlin Style:** Follow official [Kotlin Style Guide](https://kotlinlang.org/docs/coding-conventions.html).
