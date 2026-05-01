@@ -12,6 +12,7 @@ A modern Android application for news, built with Jetpack Compose and following 
 - **Build System:** Gradle Kotlin DSL (with Version Catalogs)
 - **Concurrency:** Kotlin Coroutines & Flow
 - **Dependency Injection:** Hilt
+- **Local Database:** Room
 
 ## Development Commands
 - **Build:** `./gradlew assembleDebug`
@@ -24,6 +25,7 @@ A modern Android application for news, built with Jetpack Compose and following 
 - **UI Layer:** Use Composable functions. Prefer stateless composables by hoisting state. Views (Composables) should only use **Domain Models** for displaying data. Avoid passing DTOs or Entities to the UI layer.
 - **ViewModel:** Use `androidx.lifecycle.ViewModel` for managing UI state and business logic.
 - **Data Layer:** Use Repositories to abstract data sources (Network, Database).
+    - Implement **Offline-first approach**: Use Room as the single source of truth for the UI. Repositories should fetch from network and sync to the local database.
 - **Navigation:** Use Compose Navigation.
     - Prefer **Type-safe Navigation** with Kotlin Serialization.
     - Define routes as `@Serializable` objects or classes.
